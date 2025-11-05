@@ -10,6 +10,9 @@ const bcrypt = require("bcrypt");
 mongoose.connect(process.env.MONGODB_URI,{
   tlsAllowInvalidCertificates: true,
   tlsAllowInvalidHostnames: true,
+
+  useNewUrlParser: true, // For compatibility
+  useUnifiedTopology: true
 });
 
 const app = express();
