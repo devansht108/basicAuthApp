@@ -8,8 +8,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 mongoose.connect(process.env.MONGODB_URI,{
-  ssl: true, 
-  sslValidate: false,
+  tlsAllowInvalidCertificates: true,
+  tlsAllowInvalidHostnames: true,
 });
 
 const app = express();
