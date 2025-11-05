@@ -7,7 +7,10 @@ const path = require("path");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI,{
+  ssl: true, 
+  sslValidate: false,
+});
 
 const app = express();
 app.set("view engine", "ejs");
