@@ -1,11 +1,11 @@
-require('dotenv').config();
-const express = require('express');
+// require('dotenv').config();
+const express = require("express");
 const userModel = require("./models/user");
-const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
-const path = require('path');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+const path = require("path");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -14,11 +14,11 @@ app.set("view engine", "ejs");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  res.render('index');
+  res.render("index");
 });
 
 app.post("/create", (req, res) => {
@@ -30,7 +30,7 @@ app.post("/create", (req, res) => {
         username,
         email,
         password: hash,
-        age
+        age,
       });
 
       const token = jwt.sign({ email }, process.env.JWT_SECRET);
@@ -46,7 +46,7 @@ app.get("/logout", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.render('login');
+  res.render("login");
 });
 
 app.post("/login", async (req, res) => {
@@ -55,7 +55,10 @@ app.post("/login", async (req, res) => {
 
   bcrypt.compare(req.body.password, user.password, (err, result) => {
     if (result) {
-      const token = jwt.sign({ username: req.body.username }, process.env.JWT_SECRET);
+      const token = jwt.sign(
+        { username: req.body.username },
+        process.env.JWT_SECRET
+      );
       res.cookie("token", token);
       res.send("Logging in");
     } else res.send("Invalid");
